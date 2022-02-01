@@ -11,4 +11,8 @@ public interface StudentDao {
     List<Student> getAll() throws Exception;
 
     Student getById(Long id) throws Exception;
+
+    void update(Student student);
+
+    void delete(Long id);
 }

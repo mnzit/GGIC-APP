@@ -27,4 +27,14 @@ public class StudentMemory implements StudentDao{
     public Student getById(Long id) {
         return search.get(id);
     }
+
+    @Override
+    public void update(Student student) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
 }
