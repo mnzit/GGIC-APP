@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudentMemory implements StudentDao{
+public class StudentDaoMemoryImpl implements StudentDao{
 
     private List<Student> list = new ArrayList<>();
     private Map<Long, Student> search = new HashMap<>();

@@ -60,6 +60,10 @@ public class DatabaseHelper {
         return null;
     }
 
+    public ResultSet fetch() throws Exception {
+        return preparedStatement.executeQuery();
+    }
+
     public void close() throws Exception {
         if (preparedStatement != null && !preparedStatement.isClosed()) {
             preparedStatement.close();

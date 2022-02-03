@@ -9,4 +9,5 @@ public interface QueryConstant {
         String deleteById = "DELETE FROM STUDENTS WHERE ID = ?";
         String getAll = "SELECT * FROM STUDENTS";
     }
+
 }

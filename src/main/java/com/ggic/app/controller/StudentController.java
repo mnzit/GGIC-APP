@@ -1,6 +1,6 @@
 package com.ggic.app.controller;
 
-import com.ggic.app.dao.StudentDatabase;
+import com.ggic.app.dao.StudentDaoDatabaseImpl;
 import com.ggic.app.enums.Action;
 import com.ggic.app.model.Student;
 import com.ggic.app.service.StudentService;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class StudentController {
 
-    private final StudentService studentService = new StudentServiceImpl(new StudentDatabase());
+    private final StudentService studentService = new StudentServiceImpl(new StudentDaoDatabaseImpl());
 
     public void save() {
         try {
