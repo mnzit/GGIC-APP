@@ -8,7 +8,7 @@ import com.ggic.app.model.Student;
 import java.sql.Date;
 import java.util.List;
 
-public class StudentDaoDatabaseImpl implements StudentDao {
+public class StudentDaoJdbcTemplateImpl implements StudentDao {
 
     private final JdbcTemplate<Student> studentJdbcTemplate = new JdbcTemplate<>();
 
