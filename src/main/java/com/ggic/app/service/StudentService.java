@@ -1,41 +1,19 @@
 package com.ggic.app.service;
 
-import com.ggic.app.dao.StudentDao;
 import com.ggic.app.model.Student;
 
 import java.util.List;
 
-public class StudentService {
+public interface StudentService {
 
-    private StudentDao studentDao;
+    void save(Student student) throws Exception;
 
-    public StudentService(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
+    Student findById(Long id) throws Exception;
 
-    public void save(Student student) throws Exception{
+    List<Student> findAll() throws Exception;
 
-        if (student != null) {
-            studentDao.add(student);
-        }else{
-            throw new RuntimeException("Cannot save null value");
-        }
-    }
+    void update(Student student) throws Exception;
 
-    public Student findById(Long id) throws Exception{
-        Student student = studentDao.getById(id);
-        if (student == null) {
-            throw new RuntimeException("Student not found");
-        }
-        return student;
-    }
+    void delete(Long id) throws Exception;
 
-    public List<Student> findAll() throws Exception{
-        List<Student> list = studentDao.getAll();
-        if(list != null && !list.isEmpty()){
-            return list;
-        }else{
-            throw new RuntimeException("Students not found");
-        }
-    }
 }
