@@ -11,3 +11,19 @@
 ## What does this application contain
 
 1. Commandline based CRUD Operation based application with MySQL as a DB [link](https://github.com/mnzit/JC01-APP/tree/ae1220a70627d8f78997c552887d773961efc69d)
+
+
+```
+./run.sh
+```
+Kill Port Mac & Linux
+```
+lsof -nP -iTCP -sTCP:LISTEN | grep 8080                                
+kill -9 84847   
+```
+
+Kill Port Windows
+```
+netstat -ano | findstr :8080
+taskkill /PID 84847 /F
+```
