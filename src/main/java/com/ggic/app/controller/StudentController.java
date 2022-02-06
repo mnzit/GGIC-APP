@@ -1,136 +1,160 @@
 package com.ggic.app.controller;
 
 import com.ggic.app.dao.StudentDaoJdbcTemplateImpl;
-import com.ggic.app.enums.Action;
+import com.ggic.app.dto.Response;
 import com.ggic.app.model.Student;
 import com.ggic.app.service.StudentService;
 import com.ggic.app.service.StudentServiceImpl;
+import com.ggic.app.util.JacksonUtil;
 
-import java.text.SimpleDateFormat;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
-public class StudentController {
+public class StudentController extends Controller {
 
     private final StudentService studentService = new StudentServiceImpl(new StudentDaoJdbcTemplateImpl());
 
-    public void save() {
-        try {
-            Scanner scanner = new Scanner(System.in);
-            Student student = new Student();
-            System.out.println("Enter your Id");
-            student.setId(scanner.nextLong());
-            System.out.println("Enter your Name");
-            student.setName(scanner.next());
-            System.out.println("Enter your Address");
-            student.setAddress(scanner.next());
-            System.out.println("Enter your Contact");
-            student.setContactNo(scanner.next());
-            System.out.println("Enter your DOB in YYYY-MM-dd");
-            student.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(scanner.next()));
-
-            studentService.save(student);
-            System.out.println("Student saved successfully");
-
-        } catch (Exception ex) {
-            System.out.println("Saving student failed");
-            System.out.println("Exception: " + ex.getMessage());
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String[] split = req.getRequestURL().toString().split("/");
+        if (split[split.length - 1].matches("[1-9]\\d*")) {
+            getOne(resp, Long.parseLong(split[split.length - 1]));
+        } else {
+            getAll(resp);
         }
     }
 
-    public void view() {
+    public void getOne(HttpServletResponse resp, Long id) {
         try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter your Student Id");
-            Long id = scanner.nextLong();
             Student student = studentService.findById(id);
-            System.out.println(student);
+
+            Response response = new Response();
+            response.setData(student);
+            response.setSuccess(true);
+            response.setStatusCode(200);
+            response.setDescription("Student fetched successfully");
+
+            buildResponse(resp, response);
+
         } catch (Exception ex) {
-            System.out.println("Fetching student failed");
-            System.out.println("Exception: " + ex.getMessage());
+            Response response = new Response();
+            response.setSuccess(false);
+            response.setStatusCode(500);
+            response.setDescription("System Error");
+            try {
+                buildResponse(resp, response);
+            } catch (Exception e) {
+                System.out.println("Exception:" + ex.getMessage());
+            }
         }
     }
 
-    public void viewAll() {
+    public void getAll(HttpServletResponse resp) {
         try {
             List<Student> students = studentService.findAll();
-            System.out.println(students);
+
+            Response response = new Response();
+            response.setData(students);
+            response.setSuccess(true);
+            response.setStatusCode(200);
+            response.setDescription("Students fetched successfully");
+
+            buildResponse(resp, response);
+
         } catch (Exception ex) {
-            System.out.println("Fetching students failed");
-            System.out.println("Exception: " + ex.getMessage());
+            Response response = new Response();
+            response.setSuccess(false);
+            response.setStatusCode(500);
+            response.setDescription("System Error");
+            try {
+                buildResponse(resp, response);
+            } catch (Exception e) {
+                System.out.println("Exception:" + ex.getMessage());
+            }
         }
     }
 
-    public void update() {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter your Id");
+            Student student = JacksonUtil.toObject(req.getInputStream(), Student.class);
 
-            Long studentId = scanner.nextLong();
-            Student student = studentService.findById(studentId);
+            studentService.save(student);
+            Response response = new Response();
+            response.setSuccess(true);
+            response.setStatusCode(200);
+            response.setDescription("Student saved successfully");
+            buildResponse(resp, response);
+        } catch (Exception ex) {
+            Response response = new Response();
+            response.setSuccess(false);
+            response.setStatusCode(500);
+            response.setDescription("System Error");
+            try {
+                buildResponse(resp, response);
+            } catch (Exception e) {
+                System.out.println("Exception:" + ex.getMessage());
+            }
+        }
 
-            System.out.println("Do you want to update name? (true/false)");
-            boolean updateName = scanner.nextBoolean();
-            if (updateName) {
-                System.out.println("Enter your new name");
-                student.setName(scanner.next());
-            }
-            System.out.println("Do you want to update address? (true/false)");
-            boolean updateAddress = scanner.nextBoolean();
-            if (updateAddress) {
-                System.out.println("Enter your new address");
-                student.setAddress(scanner.next());
-            }
-            System.out.println("Do you want to update contact? (true/false)");
-            boolean updateContact = scanner.nextBoolean();
-            if (updateContact) {
-                System.out.println("Enter your new contact");
-                student.setContactNo(scanner.next());
-            }
-            System.out.println("Do you want to update dob? (true/false)");
-            boolean updateDob = scanner.nextBoolean();
-            if (updateDob) {
-                System.out.println("Enter your new DOB in YYYY-MM-dd");
-                student.setDob(new SimpleDateFormat("yyyy-MM-dd").parse(scanner.next()));
-            }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Student student = JacksonUtil.toObject(req.getInputStream(), Student.class);
+
             studentService.update(student);
-            System.out.println("Student updated successfully");
+            Response response = new Response();
+            response.setSuccess(true);
+            response.setStatusCode(200);
+            response.setDescription("Student updated successfully");
+            buildResponse(resp, response);
         } catch (Exception ex) {
-            System.out.println("Updating student failed");
-            System.out.println("Exception: " + ex.getMessage());
+            Response response = new Response();
+            response.setSuccess(false);
+            response.setStatusCode(500);
+            response.setDescription("System Error");
+            try {
+                buildResponse(resp, response);
+            } catch (Exception e) {
+                System.out.println("Exception:" + ex.getMessage());
+            }
         }
     }
 
-    public void delete() {
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter your Student Id");
-            Long id = scanner.nextLong();
-            studentService.delete(id);
-            System.out.println("Student deleted successfully");
-        } catch (Exception ex) {
-            System.out.println("Deleting student failed");
-            System.out.println("Exception: " + ex.getMessage());
-        }
-    }
+            String[] split = req.getRequestURL().toString().split("/");
+            if (split[split.length - 1].matches("[1-9]\\d*")) {
+                studentService.delete(Long.parseLong(split[split.length - 1]));
+                Response response = new Response();
+                response.setSuccess(true);
+                response.setStatusCode(200);
+                response.setDescription("Student deleted successfully");
+                buildResponse(resp, response);
+            } else {
+                Response response = new Response();
+                response.setSuccess(false);
+                response.setStatusCode(403);
+                response.setDescription("Invalid format");
+                buildResponse(resp, response);
+            }
 
-    public void process(Action action) {
-        switch (action) {
-            case SAVE:
-                save();
-                break;
-            case VIEW:
-                view();
-                break;
-            case VIEW_ALL:
-                viewAll();
-                break;
-            case UPDATE:
-                update();
-                break;
-            case DELETE:
-                delete();
-                break;
+        } catch (Exception ex) {
+            Response response = new Response();
+            response.setSuccess(false);
+            response.setStatusCode(500);
+            response.setDescription("System Error");
+            try {
+                buildResponse(resp, response);
+            } catch (Exception e) {
+                System.out.println("Exception:" + ex.getMessage());
+            }
         }
     }
 }
