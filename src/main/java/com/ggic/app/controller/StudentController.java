@@ -10,22 +10,54 @@ import com.ggic.app.service.StudentServiceImpl;
 import com.ggic.app.util.JacksonUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class StudentController extends Controller {
 
     private final StudentService studentService = new StudentServiceImpl(new StudentDaoImpl());
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.service(req, resp);
+    public void getAll(HttpServletResponse httpServletResponse) {
+        ExceptionHandler.handle(() -> {
+            Response response = studentService.findAll();
+            buildResponse(httpServletResponse, response);
+        }, httpServletResponse);
+    }
+
+    public void getOne(HttpServletResponse httpServletResponse, Long id) {
+        ExceptionHandler.handle(() -> {
+            Response response = studentService.findById(id);
+            buildResponse(httpServletResponse, response);
+        }, httpServletResponse);
+    }
+
+    public void save(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        ExceptionHandler.handle(() -> {
+            StudentSaveRequest request = JacksonUtil.toObject(httpServletRequest.getInputStream(), StudentSaveRequest.class);
+            Response response = studentService.save(request);
+            buildResponse(httpServletResponse, response);
+        }, httpServletResponse);
+    }
+
+    public void update(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        ExceptionHandler.handle(() -> {
+            StudentUpdateRequest request = JacksonUtil.toObject(httpServletRequest.getInputStream(), StudentUpdateRequest.class);
+            Response response = studentService.update(request);
+            buildResponse(httpServletResponse, response);
+        }, httpServletResponse);
+    }
+
+    public void delete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        ExceptionHandler.handle(() -> {
+            String[] split = httpServletRequest.getRequestURL().toString().split("/");
+            Response response = studentService.delete(Long.parseLong(split[split.length - 1]));
+            buildResponse(httpServletResponse, response);
+        }, httpServletResponse);
     }
 
     /**
      * Contains logics because we have to handle both getAll and getById
+     *
      * @param httpServletRequest
      * @param httpServletResponse
      */
@@ -48,44 +80,18 @@ public class StudentController extends Controller {
         }, httpServletResponse);
     }
 
-    public void getOne(HttpServletResponse httpServletResponse, Long id) {
-        ExceptionHandler.handle(() -> {
-            Response response = studentService.findById(id);
-            buildResponse(httpServletResponse, response);
-        }, httpServletResponse);
-    }
-
-    public void getAll(HttpServletResponse httpServletResponse) {
-        ExceptionHandler.handle(() -> {
-            Response response = studentService.findAll();
-            buildResponse(httpServletResponse, response);
-        }, httpServletResponse);
+    @Override
+    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        save(httpServletRequest, httpServletResponse);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse httpServletResponse) {
-        ExceptionHandler.handle(() -> {
-            StudentSaveRequest request = JacksonUtil.toObject(req.getInputStream(), StudentSaveRequest.class);
-            Response response = studentService.save(request);
-            buildResponse(httpServletResponse, response);
-        }, httpServletResponse);
+    protected void doPut(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        update(httpServletRequest, httpServletResponse);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse httpServletResponse) {
-        ExceptionHandler.handle(() -> {
-            StudentUpdateRequest request = JacksonUtil.toObject(req.getInputStream(), StudentUpdateRequest.class);
-            Response response = studentService.update(request);
-            buildResponse(httpServletResponse, response);
-        }, httpServletResponse);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse httpServletResponse) {
-        ExceptionHandler.handle(() -> {
-            String[] split = req.getRequestURL().toString().split("/");
-            Response response = studentService.delete(Long.parseLong(split[split.length - 1]));
-            buildResponse(httpServletResponse, response);
-        }, httpServletResponse);
+    protected void doDelete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        delete(httpServletRequest, httpServletResponse);
     }
 }
