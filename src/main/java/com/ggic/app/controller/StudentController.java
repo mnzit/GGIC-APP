@@ -49,9 +49,15 @@ public class StudentController extends Controller {
 
     public void delete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         ExceptionHandler.handle(() -> {
-            String[] split = httpServletRequest.getRequestURL().toString().split("/");
-            Response response = studentService.delete(Long.parseLong(split[split.length - 1]));
-            buildResponse(httpServletResponse, response);
+            String url = httpServletRequest.getRequestURL().toString();
+            String[] urlParts = url.split("/");
+            boolean isNumber = NumberUtils.isDigits(urlParts[urlParts.length - 1]);
+            if (isNumber) {
+                Response response = studentService.delete(Long.parseLong(urlParts[urlParts.length - 1]));
+                buildResponse(httpServletResponse, response);
+            } else {
+                notAValidRequest(httpServletResponse);
+            }
         }, httpServletResponse);
     }
 
@@ -67,9 +73,7 @@ public class StudentController extends Controller {
             String url = httpServletRequest.getRequestURL().toString();
             String[] urlParts = url.split("/");
             boolean isGetAll = urlParts[urlParts.length - 1].endsWith("students");
-            System.out.println("isGetAll: " + isGetAll);
             boolean isGetOne = NumberUtils.isDigits(urlParts[urlParts.length - 1]);
-            System.out.println("isGetOne: " + isGetOne);
             if (isGetAll) {
                 getAll(httpServletResponse);
             } else if (isGetOne) {
