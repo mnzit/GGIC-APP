@@ -34,4 +34,17 @@ public abstract class Controller extends HttpServlet {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public static void notAValidRequest(HttpServletResponse httpServletResponse) {
+        try {
+            Response response = ResponseBuilder.invalidRequest();
+            final PrintWriter printWriter = httpServletResponse.getWriter();
+            httpServletResponse.setStatus(response.getStatusCode());
+            httpServletResponse.setContentType("application/json");
+            printWriter.write(JacksonUtil.toJson(response));
+        } catch (Exception exception) {
+            System.out.println("Exception: " + exception.getMessage());
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

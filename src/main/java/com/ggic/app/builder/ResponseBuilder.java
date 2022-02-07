@@ -56,4 +56,12 @@ public class ResponseBuilder {
         response.setDescription("System Error");
         return response;
     }
+
+    public static Response invalidRequest(){
+        Response response = new Response();
+        response.setSuccess(false);
+        response.setStatusCode(HttpServletResponse.SC_BAD_REQUEST);
+        response.setDescription("Invalid Request");
+        return response;
+    }
 }
