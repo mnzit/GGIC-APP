@@ -3,16 +3,17 @@ package com.ggic.app.dao;
 import com.ggic.app.model.Student;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentDao {
 
-    void add(Student student) throws Exception;
+    int add(Student student);
 
-    List<Student> getAll() throws Exception;
+    Optional<List<Student>> getAll();
 
-    Student getById(Long id) throws Exception;
+    Optional<Student> getById(Long id);
 
-    void update(Student student);
+    int update(Student student);
 
-    void delete(Long id);
+    int delete(Long id);
 }

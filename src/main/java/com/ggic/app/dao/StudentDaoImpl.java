@@ -7,14 +7,15 @@ import com.ggic.app.model.Student;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
-public class StudentDaoJdbcTemplateImpl implements StudentDao {
+public class StudentDaoImpl implements StudentDao {
 
     private final JdbcTemplate<Student> studentJdbcTemplate = new JdbcTemplate<>();
 
     @Override
-    public void add(Student student) {
-        int rowsAffected = studentJdbcTemplate
+    public int add(Student student) {
+        return studentJdbcTemplate
                 .update(
                         QueryConstant.Student.add,
                         new Object[]{
@@ -24,33 +25,30 @@ public class StudentDaoJdbcTemplateImpl implements StudentDao {
                                 student.getContactNo()
                         }
                 );
-        if (rowsAffected <= 0) throw new RuntimeException("Student creation failed");
     }
 
     @Override
-    public List<Student> getAll() {
+    public Optional<List<Student>> getAll() {
         return studentJdbcTemplate
-                .getAll(
+                .getAllOptional(
                         QueryConstant.Student.getAll,
                         new StudentMapper()
                 );
     }
 
     @Override
-    public Student getById(Long id) {
-        Student student = studentJdbcTemplate
-                .getOneByObject(
+    public Optional<Student> getById(Long id) {
+         return studentJdbcTemplate
+                .getOptionalOneByObject(
                         QueryConstant.Student.getById,
                         new StudentMapper(),
                         new Object[]{id}
                 );
-        if (student == null) throw new RuntimeException("Student not found");
-        return student;
     }
 
     @Override
-    public void update(Student student) {
-        int rowsAffected = studentJdbcTemplate
+    public int update(Student student) {
+        return studentJdbcTemplate
                 .update(
                         QueryConstant.Student.update,
                         new Object[]
@@ -62,16 +60,14 @@ public class StudentDaoJdbcTemplateImpl implements StudentDao {
                                         student.getId()
                                 }
                 );
-        if (rowsAffected <= 0) throw new RuntimeException("Student update failed");
     }
 
     @Override
-    public void delete(Long id) {
-        int rowsAffected = studentJdbcTemplate
+    public int delete(Long id) {
+        return studentJdbcTemplate
                 .update(
                         QueryConstant.Student.deleteById,
                         new Object[]{id}
                 );
-        if (rowsAffected <= 0) throw new RuntimeException("Student delete failed");
     }
 }

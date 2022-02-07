@@ -1,19 +1,20 @@
 package com.ggic.app.service;
 
+import com.ggic.app.request.StudentSaveRequest;
+import com.ggic.app.request.StudentUpdateRequest;
+import com.ggic.app.response.Response;
 import com.ggic.app.model.Student;
-
-import java.util.List;
 
 public interface StudentService {
 
-    void save(Student student) throws Exception;
+    Response save(StudentSaveRequest request);
 
-    Student findById(Long id) throws Exception;
+    Response findById(Long id);
 
-    List<Student> findAll() throws Exception;
+    Response findAll();
 
-    void update(Student student) throws Exception;
+    Response update(StudentUpdateRequest request);
 
-    void delete(Long id) throws Exception;
+    Response delete(Long id);
 
 }
