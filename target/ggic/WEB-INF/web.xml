@@ -8,6 +8,10 @@
         <servlet-class>com.ggic.app.controller.StudentController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>studentUiController</servlet-name>
+        <servlet-class>com.ggic.app.controller.StudentUIController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>homeController</servlet-name>
         <servlet-class>com.ggic.app.controller.HomeController</servlet-class>
     </servlet>
@@ -17,6 +21,10 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>studentController</servlet-name>
+        <url-pattern>/api/students/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>studentUiController</servlet-name>
         <url-pattern>/students/*</url-pattern>
     </servlet-mapping>
 </web-app>

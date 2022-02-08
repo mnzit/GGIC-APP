@@ -7,14 +7,13 @@
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/controller/HomeController.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/util/ValidationUtil.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/enums/Action.java
-/Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/service/StudentServiceImpl.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/response/Response.java
-/Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/dao/StudentDaoImpl.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/config/MySqlDatabaseConfig.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/connector/DatabaseConnector.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/controller/Controller.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/request/StudentSaveRequest.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/connector/SingleDatabaseConnector.java
+/Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/dao/impl/StudentDaoImpl.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/JdbcTemplate.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/util/MappingUtil.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/model/Student.java
@@ -28,7 +27,9 @@
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/dto/StudentDTO.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/util/JacksonUtil.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/config/DatabaseConfig.java
+/Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/controller/StudentUIController.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/mapper/DataMapper.java
+/Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/service/impl/StudentServiceImpl.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/pool/PoolManager.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/builder/ResponseBuilder.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/exception/UpdationFailedException.java

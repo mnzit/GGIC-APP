@@ -16,7 +16,6 @@ public class JdbcTemplate<T> {
 
     public List<T> getAll(String sql, ResultMapper<T> resultMapper) {
         try {
-            Thread.sleep(5000);
             databaseConnector.connect();
             databaseConnector.initialize(sql);
             ResultSet resultSet = databaseConnector.fetch();
