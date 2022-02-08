@@ -1,6 +1,7 @@
-package com.ggic.app.dao;
+package com.ggic.app.dao.impl;
 
 import com.ggic.app.constant.QueryConstant;
+import com.ggic.app.dao.StudentDao;
 import com.ggic.app.db.JdbcTemplate;
 import com.ggic.app.mapper.StudentMapper;
 import com.ggic.app.model.Student;
@@ -11,11 +12,9 @@ import java.util.Optional;
 
 public class StudentDaoImpl implements StudentDao {
 
-    private final JdbcTemplate<Student> studentJdbcTemplate = new JdbcTemplate<>();
-
     @Override
     public int add(Student student) {
-        return studentJdbcTemplate
+        return new JdbcTemplate<Student>()
                 .update(
                         QueryConstant.Student.add,
                         new Object[]{
@@ -29,7 +28,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Optional<List<Student>> getAll() {
-        return studentJdbcTemplate
+        return new JdbcTemplate<Student>()
                 .getAllOptional(
                         QueryConstant.Student.getAll,
                         new StudentMapper()
@@ -38,7 +37,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Optional<Student> getById(Long id) {
-         return studentJdbcTemplate
+        return new JdbcTemplate<Student>()
                 .getOptionalOneByObject(
                         QueryConstant.Student.getById,
                         new StudentMapper(),
@@ -48,7 +47,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public int update(Student student) {
-        return studentJdbcTemplate
+        return new JdbcTemplate<Student>()
                 .update(
                         QueryConstant.Student.update,
                         new Object[]
@@ -64,7 +63,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public int delete(Long id) {
-        return studentJdbcTemplate
+        return new JdbcTemplate<Student>()
                 .update(
                         QueryConstant.Student.deleteById,
                         new Object[]{id}

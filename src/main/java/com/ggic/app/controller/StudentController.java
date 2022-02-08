@@ -1,12 +1,12 @@
 package com.ggic.app.controller;
 
-import com.ggic.app.dao.StudentDaoImpl;
+import com.ggic.app.dao.impl.StudentDaoImpl;
 import com.ggic.app.exception.ExceptionHandler;
 import com.ggic.app.request.StudentSaveRequest;
 import com.ggic.app.request.StudentUpdateRequest;
 import com.ggic.app.response.Response;
 import com.ggic.app.service.StudentService;
-import com.ggic.app.service.StudentServiceImpl;
+import com.ggic.app.service.impl.StudentServiceImpl;
 import com.ggic.app.util.JacksonUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 

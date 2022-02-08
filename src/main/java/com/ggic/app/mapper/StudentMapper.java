@@ -1,6 +1,6 @@
 package com.ggic.app.mapper;
 
-import com.ggic.app.db.ResultMapper;
+import com.ggic.app.db.mapper.ResultMapper;
 import com.ggic.app.model.Student;
 
 import java.sql.ResultSet;

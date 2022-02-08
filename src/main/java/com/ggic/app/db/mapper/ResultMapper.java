@@ -1,4 +1,4 @@
-package com.ggic.app.db;
+package com.ggic.app.db.mapper;
 
 import java.sql.ResultSet;
 

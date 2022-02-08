@@ -1,4 +1,4 @@
-package com.ggic.app.service;
+package com.ggic.app.service.impl;
 
 import com.ggic.app.builder.ResponseBuilder;
 import com.ggic.app.dao.StudentDao;
@@ -7,6 +7,7 @@ import com.ggic.app.request.StudentUpdateRequest;
 import com.ggic.app.response.Response;
 import com.ggic.app.exception.ExceptionHandler;
 import com.ggic.app.model.Student;
+import com.ggic.app.service.StudentService;
 import com.ggic.app.util.MappingUtil;
 import com.ggic.app.util.ValidationUtil;
 

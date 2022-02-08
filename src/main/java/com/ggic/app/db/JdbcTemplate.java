@@ -1,5 +1,9 @@
 package com.ggic.app.db;
 
+import com.ggic.app.db.connector.DatabaseConnector;
+import com.ggic.app.db.connector.MySqlPooledDatabaseConnector;
+import com.ggic.app.db.mapper.ResultMapper;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -8,13 +12,14 @@ import java.util.Optional;
 
 public class JdbcTemplate<T> {
 
-    private final DatabaseHelper databaseHelper = new DatabaseHelper();
+    private final DatabaseConnector databaseConnector = new MySqlPooledDatabaseConnector();
 
     public List<T> getAll(String sql, ResultMapper<T> resultMapper) {
         try {
-            databaseHelper.connect();
-            databaseHelper.initialize(sql);
-            ResultSet resultSet = databaseHelper.fetch();
+            Thread.sleep(5000);
+            databaseConnector.connect();
+            databaseConnector.initialize(sql);
+            ResultSet resultSet = databaseConnector.fetch();
             List<T> rows = new ArrayList<>();
             while (resultSet.next()) {
                 rows.add(resultMapper.map(resultSet));
@@ -24,23 +29,24 @@ public class JdbcTemplate<T> {
             System.out.println("Exception: " + e.getMessage());
         } finally {
             try {
-                databaseHelper.close();
+                databaseConnector.close();
             } catch (Exception ex) {
                 System.out.println("Exception: " + ex.getMessage());
             }
         }
         return null;
     }
+
     public Optional<List<T>> getAllOptional(String sql, ResultMapper<T> resultMapper) {
-        return Optional.ofNullable(getAll(sql,resultMapper));
+        return Optional.ofNullable(getAll(sql, resultMapper));
     }
 
     public T getOneByObject(String sql, ResultMapper<T> resultMapper, Object[] parameters) {
         try {
-            databaseHelper.connect();
-            PreparedStatement preparedStatement = databaseHelper.initialize(sql);
+            databaseConnector.connect();
+            PreparedStatement preparedStatement = databaseConnector.initialize(sql);
             addParameter(preparedStatement, parameters);
-            ResultSet resultSet = databaseHelper.fetch();
+            ResultSet resultSet = databaseConnector.fetch();
             while (resultSet.next()) {
                 return resultMapper.map(resultSet);
             }
@@ -48,7 +54,7 @@ public class JdbcTemplate<T> {
             System.out.println("Exception: " + e.getMessage());
         } finally {
             try {
-                databaseHelper.close();
+                databaseConnector.close();
             } catch (Exception ex) {
                 System.out.println("Exception: " + ex.getMessage());
             }
@@ -57,20 +63,20 @@ public class JdbcTemplate<T> {
     }
 
     public Optional<T> getOptionalOneByObject(String sql, ResultMapper<T> resultMapper, Object[] parameters) {
-        return Optional.ofNullable(getOneByObject(sql, resultMapper,parameters));
+        return Optional.ofNullable(getOneByObject(sql, resultMapper, parameters));
     }
 
     public int update(String sql, Object[] parameters) {
         try {
-            databaseHelper.connect();
-            PreparedStatement preparedStatement = databaseHelper.initialize(sql);
+            databaseConnector.connect();
+            PreparedStatement preparedStatement = databaseConnector.initialize(sql);
             addParameter(preparedStatement, parameters);
-            return databaseHelper.update();
+            return databaseConnector.update();
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
         } finally {
             try {
-                databaseHelper.close();
+                databaseConnector.close();
             } catch (Exception ex) {
                 System.out.println("Exception: " + ex.getMessage());
             }

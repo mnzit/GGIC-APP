@@ -1,25 +1,29 @@
-package com.ggic.app.db;
+package com.ggic.app.db.connector;
+
+import com.ggic.app.db.mapper.DataMapper;
+import com.ggic.app.db.mapper.ResultMapper;
+import com.ggic.app.db.config.DatabaseConfig;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper {
+public abstract class DatabaseConnector {
 
-    private Connection connection;
-    private PreparedStatement preparedStatement;
+    protected Connection connection;
+    protected PreparedStatement preparedStatement;
+    protected DatabaseConfig databaseConfig;
 
-    public void connect() throws Exception {
-        Class.forName(DatabaseConfig.DRIVER_NAME);
-        connection = DriverManager.getConnection(
-                DatabaseConfig.URL,
-                DatabaseConfig.USERNAME,
-                DatabaseConfig.PASSWORD
-        );
+    public DatabaseConnector() {
     }
+
+    public DatabaseConnector(DatabaseConfig databaseConfig) {
+        this.databaseConfig = databaseConfig;
+    }
+
+    public abstract void connect() throws Exception;
 
     public PreparedStatement initialize(String sql, DataMapper dataMapper) throws Exception {
         preparedStatement = connection.prepareStatement(sql);
