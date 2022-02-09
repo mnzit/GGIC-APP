@@ -1,8 +1,8 @@
 <%@include file="../shared/header.jsp" %>
 <div class="card">
     <div class="card-header">
-        Students
-        <a href="/students/save/" class="btn btn-info btn-lg">Save</a>
+        <b>Students</b>
+        <a href="/students/save/" class="btn btn-info btn-lg float-end">Save</a>
     </div>
     <div class="card-body">
         <c:choose>
