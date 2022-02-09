@@ -1,43 +1,45 @@
-<%@ page import="com.ggic.app.model.Student" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: manjitshakya
-  Date: 08/02/2022
-  Time: 6:10 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>GGIC</title>
-</head>
-<body>
-<% if( request.getAttribute("failure") == null) {%>
-<table style="border: 1px solid black">
-    <thead>
-<tr>
-   <th>Id</th>
-   <th>Name</th>
-   <th>DOB</th>
-   <th>Contact No</th>
-   <th>Address</th>
-</tr>
-    </thead>
-    <tbody>
-    <% for(Student student: (List<Student>) request.getAttribute("students")) { %>
-    <tr>
-        <td><%=student.getId()%></td>
-        <td><%=student.getName()%></td>
-        <td><%=student.getDob()%></td>
-        <td><%=student.getContactNo()%></td>
-        <td><%=student.getAddress()%></td>
-    </tr>
-    <% }%>
-    </tbody>
-</table>
-<%} else{ %>
-<h1 style="padding:20px; background-color: red; color:white; margin: 20px">Failure Message: <%=request.getAttribute("failure")%></h1>
-<%}%>
-
-</body>
-</html>
+<%@include file="../shared/header.jsp" %>
+<div class="card">
+    <div class="card-header">
+        Students
+        <a href="/students/save/" class="btn btn-info btn-lg">Save</a>
+    </div>
+    <div class="card-body">
+        <c:choose>
+            <c:when test="${requestScope.success }">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">DOB</th>
+                        <th scope="col">Contact No</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="student" items="${requestScope.students}">
+                        <tr>
+                            <th scope="row">${student.id}</th>
+                            <td>${student.name}</td>
+                            <td>${student.dob}</td>
+                            <td>${student.contactNo}</td>
+                            <td>${student.address}</td>
+                            <td>
+                                <a href="/students/detail/${student.id}" class="btn btn-info btn-lg">Detail</a>
+                                <a href="/students/edit/${student.id}" class="btn btn-primary btn-lg">Edit</a>
+                                <a href="/students/delete/${student.id}" class="btn btn-danger btn-lg">Delete</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:when>
+            <c:otherwise>
+            <div class="alert alert-info" role="alert">${requestScope.message}</div>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</div>
+<%@include file="../shared/footer.jsp" %>
