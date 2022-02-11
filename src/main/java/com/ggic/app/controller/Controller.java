@@ -4,8 +4,11 @@ import com.ggic.app.builder.ResponseBuilder;
 import com.ggic.app.response.Response;
 import com.ggic.app.util.JacksonUtil;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public abstract class Controller extends HttpServlet {
@@ -46,5 +49,18 @@ public abstract class Controller extends HttpServlet {
             System.out.println("Exception: " + exception.getMessage());
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private String viewPrefix = "/WEB-INF/views/";
+    private String viewSuffix = ".jsp";
+
+
+    protected void view(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String viewName) throws ServletException, IOException {
+        httpServletRequest.getRequestDispatcher(viewPrefix + viewName + viewSuffix)
+                .forward(httpServletRequest, httpServletResponse);
+    }
+
+    protected void redirect(HttpServletResponse httpServletResponse, String servletPath) throws IOException {
+        httpServletResponse.sendRedirect(servletPath);
     }
 }

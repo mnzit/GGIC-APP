@@ -23,7 +23,6 @@ public class StudentUIController extends Controller {
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String uri = httpServletRequest.getRequestURI().toLowerCase();
-        System.out.println(uri);
         if (uri.contains("delete")) {
             delete(httpServletRequest, httpServletResponse);
         } else if (uri.contains("edit")) {
@@ -31,13 +30,19 @@ public class StudentUIController extends Controller {
         } else if (uri.contains("detail")) {
             detail(httpServletRequest, httpServletResponse, "detail");
         } else if (uri.contains("save")) {
-            httpServletRequest.getRequestDispatcher("/WEB-INF/views/student/save.jsp")
-                    .forward(httpServletRequest, httpServletResponse);
+            view(httpServletRequest, httpServletResponse, "students/save");
         } else {
             findAll(httpServletRequest, httpServletResponse);
         }
     }
 
+    /**
+     * This post method handles for both update and save cases
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
 
@@ -65,7 +70,8 @@ public class StudentUIController extends Controller {
         }
         httpServletRequest.setAttribute("success", response.getSuccess());
         httpServletRequest.setAttribute("message", response.getDescription());
-        httpServletResponse.sendRedirect("/students/");
+
+        redirect(httpServletResponse, "/students");
     }
 
     public void findAll(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -75,8 +81,7 @@ public class StudentUIController extends Controller {
         if (response.getSuccess()) {
             httpServletRequest.setAttribute("students", response.getData());
         }
-        httpServletRequest.getRequestDispatcher("/WEB-INF/views/student/index.jsp")
-                .forward(httpServletRequest, httpServletResponse);
+        view(httpServletRequest, httpServletResponse, "students/index");
     }
 
     public void delete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -88,7 +93,7 @@ public class StudentUIController extends Controller {
             httpServletRequest.setAttribute("success", response.getSuccess());
             httpServletRequest.setAttribute("message", response.getDescription());
         }
-        httpServletResponse.sendRedirect("/students/");
+        redirect(httpServletResponse, "/students");
     }
 
     public void detail(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String view) throws ServletException, IOException {
@@ -103,8 +108,6 @@ public class StudentUIController extends Controller {
                 httpServletRequest.setAttribute("student", response.getData());
             }
         }
-        httpServletRequest.getRequestDispatcher(String.format("/WEB-INF/views/student/%s.jsp", view))
-                .forward(httpServletRequest, httpServletResponse);
+        view(httpServletRequest, httpServletResponse, String.format("students/%s", view));
     }
-
 }

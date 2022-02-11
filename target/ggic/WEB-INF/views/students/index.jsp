@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-header">
         <b>Students</b>
-        <a href="/students/save/" class="btn btn-info btn-lg float-end">Save</a>
+        <a href="/students/save/" class="btn btn-info btn-lg float-end">Create Student</a>
     </div>
     <div class="card-body">
         <c:choose>
