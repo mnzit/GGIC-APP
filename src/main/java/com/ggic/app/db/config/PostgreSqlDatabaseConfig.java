@@ -1,6 +1,6 @@
 package com.ggic.app.db.config;
 
-public class PostgreSqlDatabaseConfig implements DatabaseConfig{
+public class PostgreSqlDatabaseConfig implements DatabaseConfig {
 
     @Override
     public String getDriverName() {
@@ -9,16 +9,16 @@ public class PostgreSqlDatabaseConfig implements DatabaseConfig{
 
     @Override
     public String getUrl() {
-        return "jdbc:postgresql://ec2-184-73-243-101.compute-1.amazonaws.com:5432/d7apf3vdfp7i9a";
+        return String.format("jdbc:postgresql://%s:%s/%s", System.getenv("HOST"), System.getenv("PORT"), System.getenv("DATABASE"));
     }
 
     @Override
     public String getUsername() {
-        return "cabipwoyvryemt";
+        return System.getenv("USERNAME");
     }
 
     @Override
     public String getPassword() {
-        return "858a6c10f3ce6505595f8e01d2e0b5d2e0c47ab59473f8daa1294ad3eb9e8a3b";
+        return System.getenv("PASSWORD");
     }
 }
