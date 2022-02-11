@@ -101,11 +101,17 @@
                         <goals><goal>copy</goal></goals>
                         <configuration>
                             <artifactItems>
+<!--                                <artifactItem>-->
+<!--                                    <groupId>com.heroku</groupId>-->
+<!--                                    <artifactId>webapp-runner</artifactId>-->
+<!--                                    <version>9.0.52.1</version>-->
+<!--                                    <destFileName>app-server.jar</destFileName>-->
+<!--                                </artifactItem>-->
                                 <artifactItem>
-                                    <groupId>com.heroku</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.52.1</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
+                                        <groupId>fish.payara.extras</groupId>
+                                        <artifactId>payara-micro</artifactId>
+                                        <version>4.1.152.1</version>
+                                    <destFileName>app-server.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>

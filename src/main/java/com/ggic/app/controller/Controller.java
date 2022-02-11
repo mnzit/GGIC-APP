@@ -3,6 +3,7 @@ package com.ggic.app.controller;
 import com.ggic.app.builder.ResponseBuilder;
 import com.ggic.app.response.Response;
 import com.ggic.app.util.JacksonUtil;
+import com.ggic.app.util.LogUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +29,7 @@ public abstract class Controller extends HttpServlet {
     public static void buildErrorResponse(HttpServletResponse httpServletResponse) {
         try {
             Response response = ResponseBuilder.serverError();
+            LogUtil.responseLogger(response, "error");
             final PrintWriter printWriter = httpServletResponse.getWriter();
             httpServletResponse.setStatus(response.getStatusCode());
             httpServletResponse.setContentType("application/json");

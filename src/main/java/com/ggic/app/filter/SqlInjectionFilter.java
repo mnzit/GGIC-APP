@@ -49,8 +49,6 @@ public class SqlInjectionFilter implements Filter {
         // Convert to an array
         String[] badStrs = sqlInjectStrList.split("\\|");
         for (int i = 0; i < badStrs.length; i++) {
-            // search
-            System.out.println(str);
             if (str.indexOf(badStrs[i]) >= 0) {
                 return true;
             }

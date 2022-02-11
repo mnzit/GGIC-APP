@@ -1,6 +1,7 @@
 package com.ggic.app.controller;
 
 import com.ggic.app.dao.impl.StudentDaoImpl;
+import com.ggic.app.exception.ExceptionHandler;
 import com.ggic.app.model.Student;
 import com.ggic.app.request.StudentSaveRequest;
 import com.ggic.app.request.StudentUpdateRequest;
@@ -23,18 +24,20 @@ public class StudentUIController extends Controller {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        String uri = httpServletRequest.getRequestURI().toLowerCase();
-        if (uri.contains("delete")) {
-            delete(httpServletRequest, httpServletResponse);
-        } else if (uri.contains("edit")) {
-            detail(httpServletRequest, httpServletResponse, "edit");
-        } else if (uri.contains("detail")) {
-            detail(httpServletRequest, httpServletResponse, "detail");
-        } else if (uri.contains("save")) {
-            view(httpServletRequest, httpServletResponse, "students/save");
-        } else {
-            findAll(httpServletRequest, httpServletResponse);
-        }
+        ExceptionHandler.handle(() -> {
+            String uri = httpServletRequest.getRequestURI().toLowerCase();
+            if (uri.contains("delete")) {
+                delete(httpServletRequest, httpServletResponse);
+            } else if (uri.contains("edit")) {
+                detail(httpServletRequest, httpServletResponse, "edit");
+            } else if (uri.contains("detail")) {
+                detail(httpServletRequest, httpServletResponse, "detail");
+            } else if (uri.contains("save")) {
+                view(httpServletRequest, httpServletResponse, "students/save");
+            } else {
+                findAll(httpServletRequest, httpServletResponse);
+            }
+        }, httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -47,39 +50,41 @@ public class StudentUIController extends Controller {
      */
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        ExceptionHandler.handle(() -> {
+            String id = httpServletRequest.getParameter("id");
+            String name = httpServletRequest.getParameter("name");
+            String address = httpServletRequest.getParameter("address");
+            String contactNo = httpServletRequest.getParameter("contactNo");
+            String dob = httpServletRequest.getParameter("dob");
+            Date date = Date.valueOf(dob);
+            System.out.println("isSave: " + id == null);
+            System.out.println("isUpdate: " + id != null);
+            Response response = null;
+            if (id == null) {
+                StudentSaveRequest studentSaveRequest = new StudentSaveRequest();
+                studentSaveRequest.setAddress(address);
+                studentSaveRequest.setContactNo(contactNo);
+                studentSaveRequest.setDob(date);
+                studentSaveRequest.setName(name);
+                response = studentService.save(studentSaveRequest);
+                LogUtil.responseLogger(response, "save");
 
-        String id = httpServletRequest.getParameter("id");
-        String name = httpServletRequest.getParameter("name");
-        String address = httpServletRequest.getParameter("address");
-        String contactNo = httpServletRequest.getParameter("contactNo");
-        Date dob = Date.valueOf(httpServletRequest.getParameter("dob"));
-        System.out.println("isSave: " + id == null);
-        System.out.println("isUpdate: " + id != null);
-        Response response = null;
-        if (id == null) {
-            StudentSaveRequest studentSaveRequest = new StudentSaveRequest();
-            studentSaveRequest.setAddress(address);
-            studentSaveRequest.setContactNo(contactNo);
-            studentSaveRequest.setDob(dob);
-            studentSaveRequest.setName(name);
-            response = studentService.save(studentSaveRequest);
-            LogUtil.responseLogger(response, "save");
+            } else {
+                StudentUpdateRequest request = new StudentUpdateRequest();
+                request.setId(Long.parseLong(id));
+                request.setAddress(address);
+                request.setContactNo(contactNo);
+                request.setDob(date);
+                request.setName(name);
+                response = studentService.update(request);
+                LogUtil.responseLogger(response, "update");
+            }
 
-        } else {
-            StudentUpdateRequest request = new StudentUpdateRequest();
-            request.setId(Long.parseLong(id));
-            request.setAddress(address);
-            request.setContactNo(contactNo);
-            request.setDob(dob);
-            request.setName(name);
-            response = studentService.update(request);
-            LogUtil.responseLogger(response, "update");
-        }
+            httpServletRequest.setAttribute("success", response.getSuccess());
+            httpServletRequest.setAttribute("message", response.getDescription());
 
-        httpServletRequest.setAttribute("success", response.getSuccess());
-        httpServletRequest.setAttribute("message", response.getDescription());
-
-        redirect(httpServletResponse, "/students");
+            redirect(httpServletResponse, "/students");
+        }, httpServletRequest, httpServletResponse);
     }
 
     public void findAll(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {

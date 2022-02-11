@@ -3,7 +3,6 @@ package com.ggic.app.db;
 import com.ggic.app.db.config.MySqlDatabaseConfig;
 import com.ggic.app.db.config.PostgreSqlDatabaseConfig;
 import com.ggic.app.db.connector.DatabaseConnector;
-import com.ggic.app.db.connector.MySqlPooledDatabaseConnector;
 import com.ggic.app.db.connector.SingleDatabaseConnector;
 import com.ggic.app.db.mapper.ResultMapper;
 
@@ -15,7 +14,7 @@ import java.util.Optional;
 
 public class JdbcTemplate<T> {
 
-    private final DatabaseConnector databaseConnector = new SingleDatabaseConnector(new PostgreSqlDatabaseConfig());
+    private final DatabaseConnector databaseConnector = new SingleDatabaseConnector(new MySqlDatabaseConfig());
 
     public List<T> getAll(String sql, ResultMapper<T> resultMapper) {
         try {

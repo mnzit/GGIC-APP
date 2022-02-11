@@ -8,7 +8,6 @@ public class SingleDatabaseConnector extends DatabaseConnector {
 
     public SingleDatabaseConnector(DatabaseConfig databaseConfig) {
         super(databaseConfig);
-        this.databaseConfig = databaseConfig;
     }
 
     @Override
@@ -20,6 +19,5 @@ public class SingleDatabaseConnector extends DatabaseConnector {
                 databaseConfig.getUsername(),
                 databaseConfig.getPassword()
         );
-        System.out.println(connection);
     }
 }
