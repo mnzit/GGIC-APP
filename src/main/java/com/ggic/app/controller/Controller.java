@@ -51,11 +51,11 @@ public abstract class Controller extends HttpServlet {
         }
     }
 
-    private String viewPrefix = "/WEB-INF/views/";
-    private String viewSuffix = ".jsp";
+    public static String viewPrefix = "/WEB-INF/views/";
+    public static String viewSuffix = ".jsp";
 
 
-    protected void view(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String viewName) throws ServletException, IOException {
+    public static void view(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, String viewName) throws ServletException, IOException {
         httpServletRequest.getRequestDispatcher(viewPrefix + viewName + viewSuffix)
                 .forward(httpServletRequest, httpServletResponse);
     }

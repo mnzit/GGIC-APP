@@ -15,6 +15,15 @@
         <servlet-name>homeController</servlet-name>
         <servlet-class>com.ggic.app.controller.HomeController</servlet-class>
     </servlet>
+    <filter>
+        <filter-name>sqlInjectionFilter</filter-name>
+        <filter-class>com.ggic.app.filter.SqlInjectionFilter</filter-class>
+        <!-- Filter the parameters passed in the foreground, you can manually add or delete, split by "|" -->
+        <init-param>
+            <param-name>sqlInjectStrList</param-name>
+            <param-value>‘|or|and|;|--|+|,|like|//|*|%|#</param-value>
+        </init-param>
+    </filter>
     <servlet-mapping>
         <servlet-name>homeController</servlet-name>
         <url-pattern>/</url-pattern>
@@ -27,4 +36,8 @@
         <servlet-name>studentUiController</servlet-name>
         <url-pattern>/students/*</url-pattern>
     </servlet-mapping>
+    <filter-mapping>
+        <filter-name>sqlInjectionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

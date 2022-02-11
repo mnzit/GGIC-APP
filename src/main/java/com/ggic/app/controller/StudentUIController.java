@@ -7,6 +7,7 @@ import com.ggic.app.request.StudentUpdateRequest;
 import com.ggic.app.response.Response;
 import com.ggic.app.service.StudentService;
 import com.ggic.app.service.impl.StudentServiceImpl;
+import com.ggic.app.util.LogUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.servlet.ServletException;
@@ -38,6 +39,7 @@ public class StudentUIController extends Controller {
 
     /**
      * This post method handles for both update and save cases
+     *
      * @param httpServletRequest
      * @param httpServletResponse
      * @throws ServletException
@@ -51,6 +53,8 @@ public class StudentUIController extends Controller {
         String address = httpServletRequest.getParameter("address");
         String contactNo = httpServletRequest.getParameter("contactNo");
         Date dob = Date.valueOf(httpServletRequest.getParameter("dob"));
+        System.out.println("isSave: " + id == null);
+        System.out.println("isUpdate: " + id != null);
         Response response = null;
         if (id == null) {
             StudentSaveRequest studentSaveRequest = new StudentSaveRequest();
@@ -59,6 +63,8 @@ public class StudentUIController extends Controller {
             studentSaveRequest.setDob(dob);
             studentSaveRequest.setName(name);
             response = studentService.save(studentSaveRequest);
+            LogUtil.responseLogger(response, "save");
+
         } else {
             StudentUpdateRequest request = new StudentUpdateRequest();
             request.setId(Long.parseLong(id));
@@ -67,7 +73,9 @@ public class StudentUIController extends Controller {
             request.setDob(dob);
             request.setName(name);
             response = studentService.update(request);
+            LogUtil.responseLogger(response, "update");
         }
+
         httpServletRequest.setAttribute("success", response.getSuccess());
         httpServletRequest.setAttribute("message", response.getDescription());
 
@@ -76,6 +84,7 @@ public class StudentUIController extends Controller {
 
     public void findAll(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         Response response = studentService.findAll();
+        LogUtil.responseLogger(response, "find all");
         httpServletRequest.setAttribute("success", response.getSuccess());
         httpServletRequest.setAttribute("message", response.getDescription());
         if (response.getSuccess()) {
@@ -90,6 +99,7 @@ public class StudentUIController extends Controller {
         boolean isNumber = NumberUtils.isDigits(urlParts[urlParts.length - 1]);
         if (isNumber) {
             Response response = studentService.delete(Long.parseLong(urlParts[urlParts.length - 1]));
+            LogUtil.responseLogger(response, "delete");
             httpServletRequest.setAttribute("success", response.getSuccess());
             httpServletRequest.setAttribute("message", response.getDescription());
         }
@@ -102,6 +112,7 @@ public class StudentUIController extends Controller {
         boolean isNumber = NumberUtils.isDigits(urlParts[urlParts.length - 1]);
         if (isNumber) {
             Response response = studentService.findById(Long.parseLong(urlParts[urlParts.length - 1]));
+            LogUtil.responseLogger(response, "detail");
             httpServletRequest.setAttribute("success", response.getSuccess());
             httpServletRequest.setAttribute("message", response.getDescription());
             if (response.getSuccess()) {

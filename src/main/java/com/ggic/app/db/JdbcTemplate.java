@@ -1,5 +1,6 @@
 package com.ggic.app.db;
 
+import com.ggic.app.db.config.MySqlDatabaseConfig;
 import com.ggic.app.db.config.PostgreSqlDatabaseConfig;
 import com.ggic.app.db.connector.DatabaseConnector;
 import com.ggic.app.db.connector.MySqlPooledDatabaseConnector;

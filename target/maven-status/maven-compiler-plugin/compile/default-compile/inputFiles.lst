@@ -23,7 +23,9 @@
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/exception/ResponseWrapper.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/mapper/ResultMapper.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/exception/DataNotFoundException.java
+/Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/util/LogUtil.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/service/StudentService.java
+/Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/filter/SqlInjectionFilter.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/dto/StudentDTO.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/util/JacksonUtil.java
 /Users/manjitshakya/JC01-APP/src/main/java/com/ggic/app/db/config/DatabaseConfig.java

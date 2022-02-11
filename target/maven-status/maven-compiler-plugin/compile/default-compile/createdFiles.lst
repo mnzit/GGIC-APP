@@ -11,7 +11,9 @@ com/ggic/app/dao/impl/StudentDaoImpl.class
 com/ggic/app/db/mapper/DataMapper.class
 com/ggic/app/request/StudentSaveRequest.class
 com/ggic/app/db/config/MySqlDatabaseConfig.class
+com/ggic/app/util/LogUtil.class
 com/ggic/app/db/mapper/ResultMapper.class
+com/ggic/app/filter/SqlInjectionFilter.class
 com/ggic/app/controller/StudentUIController.class
 com/ggic/app/exception/ExceptionHandler.class
 com/ggic/app/builder/ResponseBuilder.class

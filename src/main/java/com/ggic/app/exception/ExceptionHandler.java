@@ -12,6 +12,7 @@ public class ExceptionHandler {
         try {
             return responseWrapper.process();
         } catch (Exception ex) {
+            System.out.println("Exception: "+ex.getMessage());
             return ResponseBuilder.serverError();
         }
     }
@@ -20,6 +21,7 @@ public class ExceptionHandler {
         try {
             voidWrapper.process();
         } catch (Exception ex) {
+            System.out.println("Exception: "+ ex.getMessage());
             Controller.buildErrorResponse(response);
         }
     }
