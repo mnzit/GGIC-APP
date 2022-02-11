@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class JdbcTemplate<T> {
 
-    private final DatabaseConnector databaseConnector = new SingleDatabaseConnector(new MySqlDatabaseConfig());
+    private final DatabaseConnector databaseConnector = new SingleDatabaseConnector(new PostgreSqlDatabaseConfig());
 
     public List<T> getAll(String sql, ResultMapper<T> resultMapper) {
         try {
