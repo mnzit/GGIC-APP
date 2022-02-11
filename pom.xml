@@ -15,13 +15,11 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.28</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -101,16 +99,10 @@
                         <goals><goal>copy</goal></goals>
                         <configuration>
                             <artifactItems>
-<!--                                <artifactItem>-->
-<!--                                    <groupId>com.heroku</groupId>-->
-<!--                                    <artifactId>webapp-runner</artifactId>-->
-<!--                                    <version>9.0.52.1</version>-->
-<!--                                    <destFileName>app-server.jar</destFileName>-->
-<!--                                </artifactItem>-->
                                 <artifactItem>
-                                        <groupId>fish.payara.extras</groupId>
-                                        <artifactId>payara-micro</artifactId>
-                                        <version>4.1.152.1</version>
+                                    <groupId>com.heroku</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>9.0.52.1</version>
                                     <destFileName>app-server.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
