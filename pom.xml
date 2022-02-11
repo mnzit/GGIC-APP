@@ -108,9 +108,9 @@
 <!--                                    <destFileName>app-server.jar</destFileName>-->
 <!--                                </artifactItem>-->
                                 <artifactItem>
-                                        <groupId>fish.payara.extras</groupId>
-                                        <artifactId>payara-micro</artifactId>
-                                        <version>4.1.152.1</version>
+                                    <groupId>fish.payara.extras</groupId>
+                                    <artifactId>payara-micro</artifactId>
+                                    <version>5.2021.10</version>
                                     <destFileName>app-server.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
