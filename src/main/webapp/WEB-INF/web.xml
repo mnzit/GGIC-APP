@@ -18,7 +18,6 @@
     <filter>
         <filter-name>sqlInjectionFilter</filter-name>
         <filter-class>com.ggic.app.filter.SqlInjectionFilter</filter-class>
-        <!-- Filter the parameters passed in the foreground, you can manually add or delete, split by "|" -->
         <init-param>
             <param-name>sqlInjectStrList</param-name>
             <param-value>‘|or|and|;|--|+|,|like|//|*|%|#</param-value>
