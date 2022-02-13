@@ -39,6 +39,10 @@ public class PoolManager {
         config.setUsername(databaseConfig.getUsername());
         config.setPassword(databaseConfig.getPassword());
         config.setDriverClassName(databaseConfig.getDriverName());
+        config.setMinimumIdle(5);
+        config.setMaximumPoolSize(100);
+        config.setMaximumPoolSize(100);
+        config.setIdleTimeout(3000);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

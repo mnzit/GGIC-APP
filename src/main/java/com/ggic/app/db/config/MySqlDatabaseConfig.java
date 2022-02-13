@@ -1,5 +1,7 @@
 package com.ggic.app.db.config;
 
+import com.ggic.app.model.Student;
+
 public class MySqlDatabaseConfig implements DatabaseConfig{
 
     @Override

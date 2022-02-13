@@ -30,3 +30,4 @@ replay_pid*
 build
 *.iml
 target/
+logs/
